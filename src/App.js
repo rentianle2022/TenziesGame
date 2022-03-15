@@ -1,6 +1,5 @@
 import React from 'react'
 import Die from './components/Die'
-import Header from './components/Header'
 
 import Confetti from 'react-confetti'
 
