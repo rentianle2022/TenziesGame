@@ -6,7 +6,7 @@ export default function Die(props) {
         backgroundColor: props.isHeld ? "#59E391" : "white"
     }
 
-    const [die, setDie] = React.useState([one(), two(), three(), four(),five(),six()])
+    const die = [one(), two(), three(), four(),five(),six()]
 
     function dot() {
         return (
@@ -94,7 +94,7 @@ export default function Die(props) {
 
     return (
         <div
-            className="w-8 h-8 rounded-md shadow-lg cursor-pointer select-none"
+            className="w-8 h-8 rounded-md shadow-xl cursor-pointer select-none"
             style={styles}
             onClick={props.holdDice}
         >

@@ -15,32 +15,33 @@ export default function App() {
 
     const [bestTime, setBestTime] = React.useState(localStorage.getItem("best"))
 
+    const {innerWidth : width, innerHeight : height} = window
+
     React.useEffect(() => {
         const firstValue = dice[0].value
         const win = dice.every(die => die.isHeld === true && die.value === firstValue)
-        if (win) {
-            setTenzies(true);
-            console.log("You Win!!!")
-        }
-
+        if (win) setTenzies(true);
     }, [dice])
 
     React.useEffect(() => {
         //设置timer
         let timer
-        if(!tenzies){
-            timer = setInterval(function(){ setTime(prevTime => prevTime + 1) }, 1000)
+        if (!tenzies) {
+            setTime(0)
+            timer = setInterval(function () { setTime(prevTime => prevTime + 1) }, 1000)
         }
-        
+
         //判断是否更新最好成绩
-        const oldBest = localStorage.getItem("best")
-        if(tenzies && (oldBest === null || time < oldBest)){
-            localStorage.setItem("best",time)
-            setBestTime(time)
+        if (tenzies) {
+            const oldBest = localStorage.getItem("best")
+            if (oldBest === null || time < oldBest) {
+                localStorage.setItem("best", time)
+                setBestTime(time)
+            }
         }
 
         return () => clearInterval(timer)
-    },[tenzies])
+    }, [tenzies])
 
     function allNewDice() {
         let newDice = []
@@ -87,9 +88,9 @@ export default function App() {
 
     return (
         <div>
-            {tenzies && <Confetti />}
+            {tenzies && <Confetti width={width} height={height}/>}
 
-            <header className='flex'>
+            <header className='flex justify-between'>
                 <div className='w-20 h-6 bg-gray-200 rounded-lg m-1 flex justify-center items-center'>
                     Rolls : {rolls}
                 </div>
@@ -109,7 +110,7 @@ export default function App() {
                     </p>
                 </div>
 
-                <div className='mt-2'>
+                <div className='mt-3'>
                     <div className="grid grid-cols-5 gap-4 ">
                         {diceElements}
                     </div>
